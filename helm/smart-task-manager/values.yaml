@@ -1,0 +1,18 @@
+mysql:
+  rootPassword: "rootpassword"
+  serviceName: "db"
+
+auth:
+  image: "smart-task-auth:latest"
+  replicas: 1
+  servicePort: 5000
+
+task:
+  image: "smart-task-service:latest"
+  replicas: 1
+  servicePort: 5001
+
+frontend:
+  image: "smart-task-frontend:latest"
+  serviceType: NodePort
+  nodePort: 30080

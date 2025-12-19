@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: {{ .Values.auth.replicas }}
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth
+        image: {{ .Values.auth.image }}
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: {{ .Values.mysql.serviceName | quote }}
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: {{ .Values.mysql.rootPassword | quote }}
+        - name: DB_NAME
+          value: "auth_db"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+spec:
+  selector:
+    app: auth
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
