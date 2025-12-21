@@ -68,6 +68,11 @@ The application is split into independent services:
 
 ### 📷 Visuals
 
+<img width="1910" height="1023" alt="Image" src="https://github.com/user-attachments/assets/875b7514-4564-4b0f-be27-4ac5d8d12bc8" />
+
+<img width="1911" height="1032" alt="Image" src="https://github.com/user-attachments/assets/ce3a9063-b26e-4c1d-ad6f-9303a147105d" />
+
+<img width="1909" height="1025" alt="Image" src="https://github.com/user-attachments/assets/20ce072d-cc9b-4a02-a226-acb03bfc8764" />
 
 ---
 

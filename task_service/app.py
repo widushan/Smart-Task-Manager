@@ -14,7 +14,8 @@ db_password = os.environ.get('DB_PASSWORD', 'rootpassword')
 db_host = os.environ.get('DB_HOST', 'db')
 db_name = os.environ.get('DB_NAME', 'task_db')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}'
+# MySQL 8.0 compatibility: add charset and connection parameters
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}?charset=utf8mb4'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'supersecretkey' # Must match Auth Service
 
@@ -104,12 +105,30 @@ def delete_task(current_user_id, id):
     return jsonify({'message': 'Task deleted'}), 200
 
 def init_db():
-    with app.app_context():
-        db.create_all()
+    import time
+    max_retries = 10
+    retry_delay = 2
+    
+    for attempt in range(max_retries):
+        try:
+            with app.app_context():
+                db.create_all()
+                print("Database tables created successfully!")
+                return
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"Attempt {attempt + 1}/{max_retries}: Database connection failed, retrying in {retry_delay}s...")
+                print(f"Error: {e}")
+                time.sleep(retry_delay)
+            else:
+                print(f"Failed to connect to database after {max_retries} attempts: {e}")
+                raise
 
 if __name__ == '__main__':
+    # Wait for DB to be ready with retry logic
     try:
         init_db()
     except Exception as e:
         print(f"Error creating DB tables: {e}")
+        print("Service will continue to run but database operations may fail.")
     app.run(host='0.0.0.0', port=5001)
