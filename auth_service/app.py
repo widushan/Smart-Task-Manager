@@ -10,7 +10,7 @@ CORS(app)
 
 # Database Configuration
 db_user = os.environ.get('DB_USER', 'root')
-db_password = os.environ.get('DB_PASSWORD', 'root')
+db_password = os.environ.get('DB_PASSWORD', 'rootpassword')
 db_host = os.environ.get('DB_HOST', 'db') # 'db' is the service name in docker-compose
 db_name = os.environ.get('DB_NAME', 'auth_db')
 

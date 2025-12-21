@@ -1,0 +1,12 @@
+open the docker  and start the container - <smart-task-manager>
+
+next type this command -->
+start http://localhost
+
+
+kubernetes deployment -->
+helm install my-smart-task-app ./helm/smart-task-manager
+
+
+helm deployment -->
+helm install my-smart-task-app ./helm/smart-task-manager

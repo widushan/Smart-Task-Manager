@@ -67,7 +67,7 @@ The application is split into independent services:
 ---
 
 ### 📷 Visuals
-*(Add your screenshots here)*
+
 
 ---
 
